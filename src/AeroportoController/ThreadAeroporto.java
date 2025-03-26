@@ -40,10 +40,10 @@ public class ThreadAeroporto extends Thread {
 		System.out.println("[" + modeloAeronave + "] decolou e pista está sendo liberada.");
 		sleep(300 + (int) (Math.random() * (800 - 300 + 1)));
 	}
-	
+
 	private void decolar() {
 		try {
-			areaDecolagem.acquire(); // Adquirindo o semáforo da área de decolagem
+			areaDecolagem.acquire(); // 2 aviões por decolagem
 
 			int escolha = (int) (Math.random() * 2);
 
@@ -56,33 +56,32 @@ public class ThreadAeroporto extends Thread {
 		} catch (InterruptedException e) {
 			System.err.println("Erro ao tentar decolar o avião " + modeloAeronave + ": " + e.getMessage());
 		} finally {
-			areaDecolagem.release(); // Garantir a liberação do semáforo da área de decolagem
+			areaDecolagem.release(); // garantia a liberação da área de decolagem
 		}
 	}
 
 	private void decolarNorte() {
 		try {
-			pistaNorte.acquire(); // Adquirindo o semáforo da pista norte
+			pistaNorte.acquire(); // 1 avião por pista
 			System.err.println("[" + modeloAeronave + "] está decolando na pista norte para o destino " + destino);
 			sleep(600 + (int) (Math.random() * (800 - 600 + 1)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pistaNorte.release(); // Garantir que a pista norte seja liberada
+			pistaNorte.release(); // garantia que a pista norte seja liberada
 		}
 	}
 
 	private void decolarSul() {
 		try {
-			pistaSul.acquire(); // Adquirindo o semáforo da pista sul
+			pistaSul.acquire(); // 1 avião por pista
 			System.err.println("[" + modeloAeronave + "] está decolando na pista sul para o destino " + destino);
 			sleep(600 + (int) (Math.random() * (800 - 600 + 1)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pistaSul.release(); // Garantir que a pista sul seja liberada
+			pistaSul.release(); // garantia que a pista sul seja liberada
 		}
 	}
 
-	
 }
